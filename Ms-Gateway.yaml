@@ -1,15 +1,22 @@
 eureka:
 	client:
-        serviceUrl:
-            defaultZone: http://localhost:6001/eureka/
+       		serviceUrl:
+            		defaultZone: http://localhost:6001/eureka/
 
 spring:
 	cloud:
 		gateway:
 			routes:
-				- id: microservice-projet
-				uri: lb://microservice-projet
-				predicates:
-				- Path=/projet/**
-				filters:
-					RewritePath=/projet/(?<path>.*), /$\{path}
+			 id: GestionFormateur
+				  uri: lb://GestionFormateur
+				  predicates:
+				    - Path=/formateur/**
+				    - Before=2024-01-10T23:59:59.999+01:00[Africa/Tunis]
+				  filters:
+				    - RewritePath=/formateur/(?<path>.*), /${path}
+			id: GestionCours
+				  uri: lb://GestionCours
+				  predicates:
+				    - Path=/cours/**
+				  filters:
+				    - RewritePath=/cours/(?<path>.*), /${path}
